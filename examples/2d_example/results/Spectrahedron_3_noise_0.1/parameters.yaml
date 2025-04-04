@@ -1,0 +1,10 @@
+learning_hyperparameters:
+  learning_rate: 0.1
+  max_epochs: 101
+  optimization_solver: SCS
+  test_ratio: 0.75
+training_data:
+  data: 100
+  m: 3
+  noise_level: 0.1
+  surface: Spectrahedron
