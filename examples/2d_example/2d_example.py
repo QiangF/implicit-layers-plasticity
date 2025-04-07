@@ -31,7 +31,7 @@ with np.load(current_file_path / "2d_example_data.npz") as data:
 N_data = len(Eps)
 
 
-noise_level = 0.0
+noise_level = 0.1
 Sig += np.random.normal(scale=noise_level, size=Sig.shape)
 
 
@@ -117,6 +117,7 @@ def callback(epoch, theta_hat, data, prediction):
     plt.gca().set_aspect("equal")
     fname = data["file_name"]
     # plt.savefig(f"{fname}/{epoch}.png")
+    print(fname)
     if epoch in [0, 10, 20, 50, 100, 150, 199]:
         plt.savefig(f"{fname}/{epoch}.pdf")
     plt.close()
@@ -128,7 +129,7 @@ fname = (
 learning_hyperparameters = {
     "learning_rate": 0.1,
     "optimization_solver": "SCS",
-    "test_ratio": 0.5,
+    "test_ratio": 0.75,
     "max_epochs": 200,
 }
 training_data = {

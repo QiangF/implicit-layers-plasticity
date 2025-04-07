@@ -1,6 +1,6 @@
 learning_hyperparameters:
   learning_rate: 0.1
-  max_epochs: 101
+  max_epochs: 200
   optimization_solver: SCS
   test_ratio: 0.75
 training_data:
