@@ -96,13 +96,12 @@ class ConvexHullEllipsoids:
 class Spectrahedron:
     """A m-spectrahedron in R^n"""
 
-    def __init__(self, n, m, centrosymmetric=False):
+    def __init__(self, n, m):
         self.n = n
         self.m = m
         self.additional_vars = []
         self.vars = self.additional_vars
         self.params = [cp.Parameter((n, m * (m + 1) // 2))]
-        self.centrosymmetric = centrosymmetric
 
     def initialize_params(self):
         return [
@@ -113,7 +112,4 @@ class Spectrahedron:
         A = self.params[0]
         X = to_sym_matrix(x @ A, self.m)
         cons = [np.eye(self.m) + X >> 0]
-        if self.centrosymmetric:
-            cons += [np.eye(self.m) - X >> 0]
-
         return cons
