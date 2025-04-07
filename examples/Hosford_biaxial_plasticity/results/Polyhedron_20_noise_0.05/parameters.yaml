@@ -1,0 +1,17 @@
+ground_truth_data:
+  max_strain: 0.02
+  noise_level: 0.05
+  number_of_increments: 10
+  number_of_loading_directions: 40
+ground_truth_model:
+  Poisson_ratio: 0.3
+  YoungModulus: 70000.0
+  a: 20
+  sig0: 350.0
+  yield_surface: PlaneStressHosford
+learning_hyperparameters:
+  learning_rate: 0.05
+  max_epochs: 200
+  optimization_solver: SCS
+  test_ratio: 0.5
+seed: 15071988

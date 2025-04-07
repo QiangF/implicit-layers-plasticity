@@ -1,0 +1,5 @@
+Poisson_ratio: 0.3
+YoungModulus: 70000.0
+a: 20
+sig0: 350.0
+yield_surface: PlaneStressHosford
