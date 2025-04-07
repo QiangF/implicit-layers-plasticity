@@ -1,7 +1,7 @@
 # Learning elastoplasticity with implicit layers
 
 <p align="center">
-<img src="./examples/Hosford_biaxial_plasticity/Hosford_plasticity_learning.png" alt="Description" width="500">
+<img src="./examples/Hosford_biaxial_plasticity/Hosford_plasticity_learning.gif" alt="Description" width="500">
 </p>
 
 These scripts are supplementary materials to the paper:
