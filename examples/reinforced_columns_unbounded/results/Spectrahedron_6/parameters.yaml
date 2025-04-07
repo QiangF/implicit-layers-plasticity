@@ -1,0 +1,10 @@
+ground_truth_data:
+  number_of_increments: 1
+  number_of_loading_directions: 500
+learning_hyperparameters:
+  learning_rate: 0.05
+  m: 6
+  max_epochs: 200
+  optimization_solver: SCS
+  test_ratio: 0.5
+seed: 15071988
