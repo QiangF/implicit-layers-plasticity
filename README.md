@@ -1,6 +1,6 @@
 # Learning elastoplasticity with implicit layers
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15168910.svg)](https://doi.org/10.5281/zenodo.15168910)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15168994.svg)](https://doi.org/10.5281/zenodo.15168994)
 
 <p align="center">
 <img src="./examples/Hosford_biaxial_plasticity/Hosford_plasticity_learning.gif" alt="Description" width="500">
@@ -38,7 +38,7 @@ If you use this code in your work, please cite the following:
   author       = {Bleyer, Jérémy},
   title        = {Learning elastoplasticity with implicit layers},
   year         = 2024,
-  doi          = {10.5281/zenodo.15168910},
-  url          = {https://doi.org/10.5281/zenodo.15168910}
+  doi          = {10.5281/zenodo.15168994},
+  url          = {https://doi.org/10.5281/zenodo.15168994}
 }
 ```
