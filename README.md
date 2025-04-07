@@ -1,5 +1,9 @@
 # Learning elastoplasticity with implicit layers
 
+<p align="center">
+<img src="./examples/Hosford_biaxial_plasticity/Hosford_plasticity_learning.png" alt="Description" width="500">
+</p>
+
 These scripts are supplementary materials to the paper:
 
 > Learning elastoplasticity with implicit layers, by Jérémy Bleyer
@@ -21,5 +25,3 @@ The scripts require `pytorch` as well as `cvxpy` and `cvxpylayers` libraries ava
 - `utils.py` contains various utility functions
 
 - The `examples` folder contains the scripts corresponding to each folders of the paper, including data sets or scripts for generating such data sets
-
-
