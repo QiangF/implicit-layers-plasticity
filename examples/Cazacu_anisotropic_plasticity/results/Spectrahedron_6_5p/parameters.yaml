@@ -1,0 +1,15 @@
+ground_truth_data:
+  number_of_increments: 1
+  number_of_loading_directions: 240
+ground_truth_model:
+  Poisson_ratio: 0.3
+  YoungModulus: 150000.0
+  sig0: 190.0
+  yield_surface: Cazacu 2001
+learning_hyperparameters:
+  learning_rate: 0.05
+  m: 6
+  max_epochs: 200
+  optimization_solver: SCS
+  test_ratio: 0.95
+seed: 15071988
