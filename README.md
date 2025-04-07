@@ -34,10 +34,10 @@ The scripts require `pytorch` as well as `cvxpy` and `cvxpylayers` libraries ava
 
 If you use this code in your work, please cite the following:
 ```
-@misc{bleyer2024elastoplasticity,
+@misc{bleyer2025elastoplasticity,
   author       = {Bleyer, Jérémy},
   title        = {Learning elastoplasticity with implicit layers},
-  year         = 2024,
+  year         = 2025,
   doi          = {10.5281/zenodo.15168994},
   url          = {https://doi.org/10.5281/zenodo.15168994}
 }
