@@ -1,0 +1,6 @@
+Poisson_ratio: 0.3
+Young_modulus: 100000.0
+ngauss: 7
+sig0: 100.0
+thickness: 0.25
+yield_surface: PlaneStressvonMises
