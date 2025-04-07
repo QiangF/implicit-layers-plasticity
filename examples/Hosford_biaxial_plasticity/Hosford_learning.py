@@ -18,7 +18,6 @@ seed = 15071988
 set_global_seed(seed)
 
 
-dim = 2
 with np.load(current_file_path / "stress_strain_data.npz") as data:
     Strain = data["Strain"]
     Stress = data["Stress"]

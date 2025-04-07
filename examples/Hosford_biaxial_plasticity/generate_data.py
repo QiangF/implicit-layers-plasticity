@@ -33,7 +33,7 @@ material = PlaneStressHosford(E, nu, sig0, a)
 
 ground_truth_model = {
     "yield_surface": material.__class__.__name__,
-    "YoungModulus": E,
+    "Young_modulus": E,
     "Poisson_ratio": nu,
     "sig0": sig0,
     "a": a,
