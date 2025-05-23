@@ -54,11 +54,14 @@ ground_truth_data["noise_level"] = noise_level
 Nincr = Stress.shape[0]
 
 strain_scaling = np.max(np.abs(Strain.reshape(-1, dim)), axis=0)
+Deps = np.diag(strain_scaling)
 Strain = Strain @ np.diag(1 / strain_scaling)
 stress_scaling = np.max(np.abs(Stress.reshape(-1, dim)), axis=0)
+Dsig = np.diag(stress_scaling)
 Stress = Stress @ np.diag(1 / stress_scaling)
 
 Psig = cp.Parameter((dim, dim))
+
 deps = cp.Parameter(dim)
 sig_old = cp.Parameter(dim)
 sig = cp.Variable(dim)
@@ -151,7 +154,13 @@ def plot_results(yield_surface, xx, Sig, Sig_hat, label="Training"):
     plt.gca().set_aspect("equal")
 
 
+from utils import to_np
+
+
 def callback(epoch, theta_hat, data, prediction):
+    Psig = np.sqrt(Dsig @ np.linalg.inv(Deps)) @ to_np(theta_hat[-1])
+    print("Elastic stiffness:", Psig.T @ Psig)
+
     sig_train = data["sig_train"]
     Sig = sig_train.reshape((Nincr, -1, dim)) @ np.diag(stress_scaling)
     sig_hat_train, sig_hat_test = prediction
