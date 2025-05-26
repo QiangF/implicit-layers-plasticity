@@ -3,14 +3,54 @@ import numpy as np
 from utils import to_sym_matrix, to_triu_matrix, rand_uniform
 
 
-class Polyhedron:
+class ConvexSet:
+    def __init__(self, n):
+        self.n = n
+        self.lamb = cp.Variable()
+        self.x_free = cp.Parameter(n)
+        self.x_fixed = cp.Parameter(n)
+        self.x_ = cp.Variable(n)
+        self.plot_prob = cp.Problem(
+            cp.Maximize(self.lamb),
+            self.constraints(self.x_)
+            + [self.x_ == self.lamb * self.x_free + self.x_fixed],
+        )
+
+    def constraints(self, x):
+        return []
+
+    def plot(self, x, fixed_indices=None):
+        if fixed_indices is None:
+            fixed_indices = []
+        if len(x.shape) == 1:
+            x = np.array([x])
+        y = np.zeros_like(x)
+        for j, xj in enumerate(x):
+            val_free = np.zeros((self.n,))
+            val_fixed = np.zeros((self.n,))
+            for i in range(self.n):
+                if i in fixed_indices:
+                    val_fixed[i] = xj[i]
+                else:
+                    val_free[i] = xj[i]
+            self.x_free.value = val_free
+            self.x_fixed.value = val_fixed
+            self.plot_prob.solve(solver=cp.SCS, verbose=False)
+            if self.lamb.value:
+                y[j, :] = self.lamb.value * val_free + val_fixed
+            else:
+                y[j, :] = val_fixed
+        return y
+
+
+class Polyhedron(ConvexSet):
     def __init__(self, n, m):
         """A polyhedron in R^n defined by m hyperplanes"""
-        self.n = n
         self.m = m
         self.additional_vars = []
         self.vars = self.additional_vars
         self.params = [cp.Parameter((n, m))]
+        super().__init__(n)
 
     def initialize_params(self):
         return [
@@ -23,15 +63,15 @@ class Polyhedron:
         return cons
 
 
-class Ellipsoid:
+class Ellipsoid(ConvexSet):
     def __init__(self, n):
         """An ellipsoid in R^n"""
-        self.n = n
         Q = cp.Parameter(n * (n + 1) // 2)
         c_ = cp.Parameter(n)
         # here c_ denotes Q @ c with notations from the paper
         self.params = [Q, c_]
         self.vars = []
+        super().__init__(n)
 
     def initialize_params(self):
         return [
@@ -56,10 +96,9 @@ class Ellipsoid:
         return xt / Lamb * radius + np.repeat(c_[np.newaxis, :], m, axis=0)
 
 
-class ConvexHullEllipsoids:
+class ConvexHullEllipsoids(ConvexSet):
     def __init__(self, n, ellipsoids):
         """A convex hull of m ellipsoids in R^n"""
-        self.n = n
         self.m = len(ellipsoids)
         self.ellipsoids = ellipsoids
         self.additional_vars = [
@@ -68,6 +107,7 @@ class ConvexHullEllipsoids:
         ]
         self.vars = [v for dom in ellipsoids for v in dom.vars] + self.additional_vars
         self.params = [p for dom in ellipsoids for p in dom.params]
+        super().__init__(n)
 
     def initialize_params(self):
         return [p for dom in self.ellipsoids for p in dom.initialize_params()]
@@ -93,15 +133,15 @@ class ConvexHullEllipsoids:
         return out
 
 
-class Spectrahedron:
+class Spectrahedron(ConvexSet):
     """A m-spectrahedron in R^n"""
 
     def __init__(self, n, m):
-        self.n = n
         self.m = m
         self.additional_vars = []
         self.vars = self.additional_vars
         self.params = [cp.Parameter((n, m * (m + 1) // 2))]
+        super().__init__(n)
 
     def initialize_params(self):
         return [

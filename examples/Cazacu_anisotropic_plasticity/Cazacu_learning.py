@@ -2,7 +2,7 @@ import os
 import yaml
 from pathlib import Path
 import numpy as np
-from utils import set_global_seed
+from utils import set_global_seed, to_np
 import matplotlib.pyplot as plt
 import cvxpy as cp
 from cvxpylayers.torch import CvxpyLayer
@@ -91,6 +91,8 @@ def callback(epoch, theta_hat, data, prediction):
 
     npath = Sig.shape[1]
 
+    surface.params[0].value = to_np(theta_hat[0])
+
     plt.figure(figsize=(6, 7.5))
 
     Nshear = 6
@@ -106,9 +108,16 @@ def callback(epoch, theta_hat, data, prediction):
             "-",
             color=blues[p],
         )
+        s_xy = np.average(Stress[-1, Nrad * p : Nrad * (p + 1), 2])
+        stress = surface.plot(
+            np.array(
+                [[np.cos(t), np.sin(t), s_xy] for t in np.linspace(0, 2 * np.pi, 200)]
+            ),
+            fixed_indices=[2],
+        )
         plt.plot(
-            Sig_hat_full[-1, Nrad * p : Nrad * (p + 1), 0],
-            Sig_hat_full[-1, Nrad * p : Nrad * (p + 1), 1],
+            stress[:, 0] * stress_scaling[0],
+            stress[:, 1] * stress_scaling[1],
             "-",
             color=reds[p],
         )
